@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Product: {{ product.name }}</h1>
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Items</h4>
+
+    {% for item in product.item_set.all %}
+      <div>
+        <strong><a href="{{ item.get_absolute_url }}">{{ item.name }}</a> ({{ item.iteminstance_set.all.count }})</strong>
+      </div>
+    {% endfor %}
+	
+  </div>
+{% endblock %}

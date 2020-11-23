@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Item: {{ iteminstance.item.name }}</h1>
+
+  <p><strong>Price</strong> {{ iteminstance.item.price }}</p>
+  <p><strong>ID</strong> {{ iteminstance.id }}</p>
+  {% for product_type in iteminstance.item.product_type.all %}
+      <p><strong>{{ product_type }}</strong></p>
+  {% endfor %}
+  <p><strong>Number in Stock</strong> {{ iteminstance.item.iteminstance_set.all.count }}</p>
+{% endblock %}

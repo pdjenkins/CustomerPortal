@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+<h1>Store Page</h1>
+{% endblock %}
+
+{% block content %}
+  <h1>Grocery Home</h1>
+  {% if user.is_authenticated %}
+    Hi {{ user.username }}
+	<p><a href="{% url 'logout' %}">Log Out</a></p>
+  {% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">Log In</a> |
+    <a href="{% url 'signup' %}">Sign Up</a>
+{% endif %}
+  <p>Our Current Inventory Count is: <strong>{{ items_instance_num }}</strong></p>
+  <p>These items are currently in stock:</p>
+  <ul>
+    {% for iteminstance in items_instance_list %}
+	    {% if iteminstance.status == "a" %}
+		    <a href="{{ iteminstance.get_absolute_url }}"><li>{{ iteminstance.item.name }}
+			{% for product_type in iteminstance.item.product_type.all %}
+		, {{ product_type }}
+			{% endfor %}
+			: ${{ iteminstance.item.price}}</a></li>
+		{% endif %}
+	{% endfor %}
+  </ul>
+  
+  <p>You have visited this page {{ num_visits }}{% if num_visits == 1%} time{% else %} times{% endif %}.</p>
+{% endblock %}

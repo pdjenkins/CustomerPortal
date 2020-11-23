@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Name: {{ item.name }}</h1>
+
+  <p><strong>Price</strong> {{ item.price }}</p>
+  {% for product_type in item.product_type.all %}
+      <p><strong>{{ product_type }}</strong></p>
+  {% endfor %}
+  <p><strong>Number in Stock</strong> {{ item.iteminstance_set.all.count }}</p>
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>In Stock</h4>
+
+    {% for stock in item.iteminstance_set.all %}
+      <hr>
+      <a href="{{ stock.get_absolute_url }}"><p class="text-muted"><strong>Id:</strong> {{ stock.id }}</a></p>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Item List</h1>
+  {% if item_list %}
+  <ul>
+    {% for item in item_list %}
+      <li>
+        <a href="{{ item.get_absolute_url }}">{{ item.name }}{% for product_type in item.product_type.all %}, {{ product_type }}{% endfor %}: ${{ item.price }}
+		</a>
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no items in inventory.</p>
+  {% endif %}       
+{% endblock %}
