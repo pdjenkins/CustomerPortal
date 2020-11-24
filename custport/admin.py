@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser, Product, Item, ItemInstance, Order
+from .models import CustomUser, Product, Item, ItemInstance, Order, Cart
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
@@ -17,3 +17,4 @@ admin.site.register(Product)
 admin.site.register(Item)
 admin.site.register(ItemInstance)
 admin.site.register(Order)
+admin.site.register(Cart)

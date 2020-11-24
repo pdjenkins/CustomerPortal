@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from .forms import CustomUserCreationForm
 from django.http import Http404
+from django.db import models
 
 def index(request):
     """View function for home page of site."""
@@ -53,16 +54,26 @@ class SignUpView(CreateView):
     template_name = 'registration/signup.html'
 class CartView(generic.ListView):
     model = Cart
-#def addToCart(request, itemid, user):
-def addToCart(request, itemid, user):
+
+def addToCart(request, itemid):
     try:
         item = ItemInstance.objects.get(id=itemid)
-        #cart = Cart.objects.get(owner=user)
-        #cart.add_item(item)
+        current_user = CustomUser.objects.get(username=request.user)
+        cart = Cart.objects.get(owner=request.user)
+        cart.add_item(item)
+        cart.save()
     except ItemInstance.DoesNotExist:
         raise Http404("Item does not exist")
-    #except Cart.DoesNotExist:
-    #    raise Http404("Cart does not exist or user does not exist")
+    except Cart.DoesNotExist:
+        #create the cart
+        cart = Cart(owner=request.user)
+        #save it to the database
+        cart.save()
+        #To-do: get the add_item function to work
+        #cart.add_item(item)
+    #This handles the user not being logged in
+    except CustomUser.DoesNotExist:
+        current_user = None
     
     # Generate counts of some of the main objects
     items_instance_list = ItemInstance.objects.filter(status__contains='a')

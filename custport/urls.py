@@ -10,5 +10,5 @@ urlpatterns = [
 	path('iteminstance/<str:pk>', views.ItemInstanceDetailView.as_view(), name='iteminstance-detail'),
 	path('signup/', SignUpView.as_view(), name='signup'),
 	path('cart/', views.CartView.as_view(), name='cart'),
-	path('cart/<str:itemid>/<str:user>', views.addToCart, name='addToCart'),
+	path('cart/<str:itemid>', views.addToCart, name='addToCart'),
 ]
