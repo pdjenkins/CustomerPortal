@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
 from .views import SignUpView
-
 urlpatterns = [
     path('', views.index, name='index'),
     path('items/', views.ItemListView.as_view(), name='items'),
@@ -10,4 +9,6 @@ urlpatterns = [
 	path('product/<int:pk>', views.ProductDetailView.as_view(), name='product-detail'),
 	path('iteminstance/<str:pk>', views.ItemInstanceDetailView.as_view(), name='iteminstance-detail'),
 	path('signup/', SignUpView.as_view(), name='signup'),
+	path('cart/', views.CartView.as_view(), name='cart'),
+	path('cart/<str:itemid>/<str:user>', views.addToCart, name='addToCart'),
 ]

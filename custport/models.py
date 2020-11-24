@@ -34,7 +34,25 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return self.username
-
+class Cart(models.Model):
+    #owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    #should this be a list of foreign keys or literal Item models?
+    contents = []
+    #pass the unique item id of this ItemInstance to add it to the cart
+    def add_item(item_id):
+        item = ItemInstance.objects.filter(id=item_id)
+        #this loop should prevent duplicate items in the list
+        for tempItem in contents:
+            if tempItem.id == item.id:#check if the items id match, if so then its a duplicate
+                return
+        #To-do: set the status of the item to not available
+        #item.status = 'na'
+        contents.append(item)
+    def __str__(self):
+        output = ''
+        return self.owner + ',' + output.join(self.contents)
+    
 class Order(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this Order')
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
