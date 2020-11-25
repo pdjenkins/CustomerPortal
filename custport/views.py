@@ -52,7 +52,7 @@ class SignUpView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
-class CartView(generic.ListView):
+class CartView(generic.DetailView):
     model = Cart
 
 def addToCart(request, itemid):
@@ -60,7 +60,9 @@ def addToCart(request, itemid):
         item = ItemInstance.objects.get(id=itemid)
         current_user = CustomUser.objects.get(username=request.user)
         cart = Cart.objects.get(owner=request.user)
-        cart.add_item(item)
+        #add the item to the cart by setting its foreign key to this cart object
+        cart.iteminstance_set.add(item)
+        #cart.add_item(item)
         cart.save()
     except ItemInstance.DoesNotExist:
         raise Http404("Item does not exist")
@@ -69,8 +71,7 @@ def addToCart(request, itemid):
         cart = Cart(owner=request.user)
         #save it to the database
         cart.save()
-        #To-do: get the add_item function to work
-        #cart.add_item(item)
+
     #This handles the user not being logged in
     except CustomUser.DoesNotExist:
         current_user = None

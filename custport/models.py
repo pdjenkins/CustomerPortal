@@ -35,20 +35,13 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 class Cart(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    #should this be a list of foreign keys or literal Item models?
-    contents = []
-    #pass the unique item id of this ItemInstance to add it to the cart
-    def add_item(self,item):
-        
-        #To-do: set the status of the item to not available
-        #item.status = 'na'
-        self.contents.append(ItemInstance(item))
+    owner = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     def __str__(self):
-        #output = ''.join(self.contents[0].)
-        #return output.join(self.contents)
-        #return "Cart" + str(self.contents[0])
-        return "This is a blank return"
+        return self.owner.username + " cart"
+    #def get_absolute_url(self):
+    #    """Returns the url to access a detail record for this cart."""
+    #    return reverse('cart-detail', args=[str(self.id)])
+
 class Order(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this Order')
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -74,10 +67,12 @@ class ItemInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this Item')
     item = models.ForeignKey('Item', on_delete=models.SET_NULL, null=True)
     order = models.ForeignKey('Order', on_delete=models.SET_NULL, null=True, blank=True)
+    cart = models.ForeignKey('Cart', on_delete=models.SET_NULL, null=True, blank=True)
     expirydate = models.DateField(null=True, blank=True)
 	
     AVAILABILITY = (
     ('a','Available'),
+    ('c', 'Cart'),
     ('o','Order'),
     )
     status = models.CharField(
