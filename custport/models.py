@@ -55,6 +55,7 @@ class Item(models.Model):
     name = models.CharField(max_length=200)
     product_type = models.ManyToManyField('Product', help_text='Select a Product Type')
     price = models.DecimalField(max_digits=10 ,decimal_places=2, default=0.00)
+    picture = models.ImageField(upload_to='images/', default='images/default.png')
     
     def __str__(self):
         """String for representing the Model object."""

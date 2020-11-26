@@ -6,7 +6,8 @@
   <ul>
     {% for item in item_list %}
       <li>
-        <a href="{{ item.get_absolute_url }}">{{ item.name }}{% for product_type in item.product_type.all %}, {{ product_type }}{% endfor %}: ${{ item.price }}
+        <a href="{{ item.get_absolute_url }}"><img src="{{ item.picture.url }}" alt="{{ item.name }}" width="200" height="300">
+          {{ item.name }}{% for product_type in item.product_type.all %}, {{ product_type }}{% endfor %}: ${{ item.price }}
 		</a>
       </li>
     {% endfor %}

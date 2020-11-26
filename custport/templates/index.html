@@ -22,7 +22,9 @@
   <ul>
     {% for iteminstance in items_instance_list %}
 	    {% if iteminstance.status == "a" %}
-		    <a href="{{ iteminstance.get_absolute_url }}"><li>{{ iteminstance.item.name }}
+		    <a href="{{ iteminstance.get_absolute_url }}">
+          <li><img src="{{ iteminstance.item.picture.url }}" alt="{{ iteminstance.item.name }}" width="200" height="300">
+          {{ iteminstance.item.name }} 
 			{% for product_type in iteminstance.item.product_type.all %}
 		, {{ product_type }}
 			{% endfor %}
