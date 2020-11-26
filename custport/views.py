@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Q
 
 # Create your views here.
 
@@ -41,6 +42,15 @@ class ItemDetailView(generic.DetailView):
 	
 class ProductListView(generic.ListView):
     model = Product
+
+class SearchResultsView(generic.ListView):
+    model = Item
+    template_name = 'search_results.html'
+
+    def get_queryset(self): 
+        query = self.request.GET.get('q')
+        object_list = Item.objects.filter(Q(name__icontains=query))
+        return object_list 
 	
 class ProductDetailView(generic.DetailView):
     model = Product

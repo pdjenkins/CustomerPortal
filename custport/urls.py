@@ -3,6 +3,7 @@ from . import views
 from .views import SignUpView
 urlpatterns = [
     path('', views.index, name='index'),
+    path('search/', views.SearchResultsView.as_view(), name='search_results'),
     path('items/', views.ItemListView.as_view(), name='items'),
     path('item/<int:pk>', views.ItemDetailView.as_view(), name='item-detail'),
 	path('products/', views.ProductListView.as_view(), name='products'),
