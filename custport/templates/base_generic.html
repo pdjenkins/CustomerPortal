@@ -17,6 +17,9 @@
         <ul class="sidebar-nav">
 		  {% if user.is_authenticated %}
 		  <li>{{ user.username }}</li>
+		  {% if user.cart %}
+		  <li><a href="{% url 'cart' user.cart.id %}">cart</a></li>
+		  {% endif %}
 		  {% endif %}
           <li><a href="{% url 'index' %}">Home</a></li>
 		  <li><a href="{% url 'items' %}">All Items</a></li>

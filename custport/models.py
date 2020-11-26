@@ -38,9 +38,10 @@ class Cart(models.Model):
     owner = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     def __str__(self):
         return self.owner.username + " cart"
-    #def get_absolute_url(self):
-    #    """Returns the url to access a detail record for this cart."""
-    #    return reverse('cart-detail', args=[str(self.id)])
+    
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this cart."""
+        return reverse('cart-detail', args=[str(self.id)])
 
 class Order(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this Order')

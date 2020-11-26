@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        {% if cart.owner.username == user.username %}
+            <h1>{{ cart.owner.username }}</h1>
+
+            {% for iteminstance in cart.iteminstance_set.all %}
+                 <p><strong>{{ iteminstance.item.name }}, <a href="{{ iteminstance.get_absolute_url }}">{{ iteminstance.id }}</a>, {{ iteminstance.item.price }}</strong></p>
+            {% endfor %}
+		{% endif %}
+{% endif %}
+{% endblock %}
+
