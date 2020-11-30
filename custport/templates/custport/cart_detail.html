@@ -7,6 +7,7 @@
 
             {% for iteminstance in cart.iteminstance_set.all %}
                  <p><strong>{{ iteminstance.item.name }}, <a href="{{ iteminstance.get_absolute_url }}">{{ iteminstance.id }}</a>, {{ iteminstance.item.price }}</strong>
+                    <p><strong>Availability</strong> {{ iteminstance.status }}</p>
                     <form action="{% url 'removeCart' iteminstance.id %}" method="post">
                         {% csrf_token %}
                         <button type="submit" value="Remove from cart">Remove from cart</button>

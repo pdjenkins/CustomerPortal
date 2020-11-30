@@ -79,7 +79,7 @@ class ItemInstance(models.Model):
     )
     status = models.CharField(
         max_length=1,
-        choices=AVAILABILITY,
+        #choices=AVAILABILITY,
         blank=True,
         default='a',
         help_text='Item availability',

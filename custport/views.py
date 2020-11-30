@@ -70,9 +70,11 @@ def addToCart(request, itemid):
         item = ItemInstance.objects.get(id=itemid)
         current_user = CustomUser.objects.get(username=request.user)
         cart = Cart.objects.get(owner=request.user)
+        #set item status
+        item.status = 'c'
+        item.save(update_fields=["status"])
         #add the item to the cart by setting its foreign key to this cart object
         cart.iteminstance_set.add(item)
-        #cart.add_item(item)
         cart.save()
     except ItemInstance.DoesNotExist:
         raise Http404("Item does not exist")
@@ -81,7 +83,6 @@ def addToCart(request, itemid):
         cart = Cart(owner=request.user)
         #save it to the database
         cart.save()
-        #To-do: set the item status to 'c', Cart
 
     #This handles the user not being logged in
     except CustomUser.DoesNotExist:
@@ -105,6 +106,9 @@ def removeCart(request, itemid):
         item = ItemInstance.objects.get(id=itemid)
         current_user = CustomUser.objects.get(username=request.user)
         cart = Cart.objects.get(owner=request.user)
+        #set item status
+        item.status = 'a'
+        item.save(update_fields=["status"])
         #remove the item from the cart by 
         cart.iteminstance_set.remove(item)
         cart.save()
