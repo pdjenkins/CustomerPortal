@@ -81,11 +81,41 @@ def addToCart(request, itemid):
         cart = Cart(owner=request.user)
         #save it to the database
         cart.save()
+        #To-do: set the item status to 'c', Cart
 
     #This handles the user not being logged in
     except CustomUser.DoesNotExist:
         current_user = None
     
+    # Generate counts of some of the main objects
+    items_instance_list = ItemInstance.objects.filter(status__contains='a')
+    items_instance_num = ItemInstance.objects.filter(status__contains='a').count()
+	
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+    
+    context = {
+        'items_instance_list': items_instance_list,
+        'items_instance_num': items_instance_num,
+		'num_visits': num_visits,
+    }
+    return render(request, 'index.html', context=context)
+def removeCart(request, itemid):
+    try:
+        item = ItemInstance.objects.get(id=itemid)
+        current_user = CustomUser.objects.get(username=request.user)
+        cart = Cart.objects.get(owner=request.user)
+        #remove the item from the cart by 
+        cart.iteminstance_set.remove(item)
+        cart.save()
+        #To-do: set the item status to 'a', available
+
+    except ItemInstance.DoesNotExist:
+        raise Http404("Item does not exist")
+    except Cart.DoesNotExist:
+        cart = None
+    except CustomUser.DoesNotExist:
+        current_user = None
     # Generate counts of some of the main objects
     items_instance_list = ItemInstance.objects.filter(status__contains='a')
     items_instance_num = ItemInstance.objects.filter(status__contains='a').count()
