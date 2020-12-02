@@ -2,4 +2,16 @@
     margin-top: 20px;
     padding: 0;
     list-style: none;
+    background-color: #FBCEB1;
+    font-family: "Fantasy", Cottonwood, Critter, Studz, Herculanum;
+    font-weight: bold;
+}
+
+h1 {
+	color: #FAEBD7;
+	background-color: #D3212D;
+}
+
+ul a {
+	font-size: 16pt;
 }
