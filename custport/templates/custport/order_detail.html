@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        {% if order.owner.username == user.username %}
+            <h1>{{ order.owner.username }}</h1>
+
+            {% for iteminstance in order.iteminstance_set.all %}
+                 <p><strong>{{ iteminstance.item.name }}, <a href="{{ iteminstance.get_absolute_url }}">{{ iteminstance.id }}</a>, {{ iteminstance.item.price }}</strong>
+                </p>
+            {% endfor %}
+		{% endif %}
+{% endif %}
+{% endblock %}
+

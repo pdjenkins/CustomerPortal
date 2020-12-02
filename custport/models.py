@@ -49,7 +49,11 @@ class Order(models.Model):
 	
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.id}'
+        return self.owner.username + " order ID: " + str(self.id)
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this cart."""
+        return reverse('order-detail', args=[str(self.id)])
+
 
 class Item(models.Model):
     name = models.CharField(max_length=200)
@@ -81,7 +85,7 @@ class ItemInstance(models.Model):
         max_length=1,
         #choices=AVAILABILITY,
         blank=True,
-        default='a',
+        #default='a',
         help_text='Item availability',
     )
 	

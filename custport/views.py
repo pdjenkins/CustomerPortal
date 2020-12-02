@@ -64,7 +64,8 @@ class SignUpView(CreateView):
     template_name = 'registration/signup.html'
 class CartView(generic.DetailView):
     model = Cart
-
+class OrderView(generic.DetailView):
+    model = Order
 def addToCart(request, itemid):
     try:
         item = ItemInstance.objects.get(id=itemid)
@@ -133,3 +134,52 @@ def removeCart(request, itemid):
 		'num_visits': num_visits,
     }
     return render(request, 'index.html', context=context)
+
+def createOrder(request):
+    try:
+        current_user = CustomUser.objects.get(username=request.user)
+        cart = Cart.objects.get(owner=request.user)
+        order = Order(owner=request.user)
+        order.save()
+        #add each item to the order
+        for item in cart.iteminstance_set.all():
+            item.status = 'o'
+            item.save()
+            cart.iteminstance_set.remove(item)
+            order.iteminstance_set.add(item)
+
+ 
+    except ItemInstance.DoesNotExist:
+        raise Http404("Item does not exist")
+    except Cart.DoesNotExist:
+        cart = None
+    except CustomUser.DoesNotExist:
+        current_user = None
+
+    order.save()
+
+    # Generate counts of some of the main objects
+    items_instance_list = ItemInstance.objects.filter(status__contains='a')
+    items_instance_num = ItemInstance.objects.filter(status__contains='a').count()
+	
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+    
+    context = {
+        'items_instance_list': items_instance_list,
+        'items_instance_num': items_instance_num,
+		'num_visits': num_visits,
+    }
+    return render(request, 'index.html', context=context)
+
+def orders (request):
+    """View function for order history."""
+    try:
+        order_list = Order.objects.filter(owner=request.user)
+        context = {
+            'order_list': order_list,
+        }
+        # Render the HTML template index.html with the data in the context variable
+        return render(request, 'order_list.html', context=context)
+    except CustomUser.DoesNotExist:
+        return render(request, 'index.html')
