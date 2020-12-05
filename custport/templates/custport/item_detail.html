@@ -13,8 +13,10 @@
     <h4>In Stock</h4>
 
     {% for stock in item.iteminstance_set.all %}
+	{% if stock.status == 'a' %}
       <hr>
       <a href="{{ stock.get_absolute_url }}"><p class="text-muted"><strong>Id:</strong> {{ stock.id }}</a></p>
+	{% endif %}
     {% endfor %}
   </div>
 {% endblock %}
