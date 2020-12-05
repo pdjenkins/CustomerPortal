@@ -8,7 +8,7 @@
 
     {% for item in product.item_set.all %}
       <div>
-        <strong><a href="{{ item.get_absolute_url }}">{{ item.name }}</a> ({{ item.iteminstance_set.all.count }})</strong>
+        <strong><a href="{{ item.get_absolute_url }}">{{ item.name }}</a> </strong>
       </div>
     {% endfor %}
 	

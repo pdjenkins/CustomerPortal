@@ -7,7 +7,6 @@
   {% for product_type in item.product_type.all %}
       <p><strong>{{ product_type }}</strong></p>
   {% endfor %}
-  <p><strong>Number in Stock</strong> {{ item.iteminstance_set.all.count }}</p>
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>In Stock</h4>

@@ -8,7 +8,6 @@
   {% for product_type in iteminstance.item.product_type.all %}
       <p><strong>{{ product_type }}</strong></p>
   {% endfor %}
-  <p><strong>Number in Stock</strong> {{ iteminstance.item.iteminstance_set.all.count }}</p>
   <form action="{% url 'addToCart' iteminstance.id %}" method="post">
     {% csrf_token %}
     <button type="submit" value="Add to cart">Add to cart</button>
