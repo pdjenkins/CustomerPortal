@@ -2,16 +2,41 @@
     margin-top: 20px;
     padding: 0;
     list-style: none;
-    background-color: #FBCEB1;
     font-family: "Fantasy", Cottonwood, Critter, Studz, Herculanum;
     font-weight: bold;
 }
 
 h1 {
-	color: #FAEBD7;
-	background-color: #D3212D;
+	color: #FFFF99;
+	font-size: 40pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-align: center;
+	border: 3px solid blue;
+	background-color: blue;
 }
 
 ul a {
-	font-size: 16pt;
+	font-size: 14pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal
+
 }
+
+body {
+        background-color: #CCFFFF;
+        }
+
+p {
+    color: #0066ff;
+    font-size: 14pt;
+    font-family; Arial, Helvetica, sans-serif;
+
+}
+
+img {
+       display: block;
+       margin-right: auto;
+       margin-left: auto;
+       background-color: #CCFFFF;
+       }
