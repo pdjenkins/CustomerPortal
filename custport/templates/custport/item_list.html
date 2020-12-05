@@ -5,11 +5,17 @@
   {% if item_list %}
   <ul>
     {% for item in item_list %}
-      <li>
-        <a href="{{ item.get_absolute_url }}"><img src="{{ item.picture.url }}" alt="{{ item.name }}" width="200" height="300">
-          {{ item.name }}{% for product_type in item.product_type.all %}, {{ product_type }}{% endfor %}: ${{ item.price }}
+      
+        <a href="{{ item.get_absolute_url }}">
+		<table><tr>
+		<td><img src="{{ item.picture.url }}" alt="{{ item.name }}" width="200" height="300"></td>
+          <td>{{ item.name }}</td>
+		  <td>{% for product_type in item.product_type.all %}
+		  {{ product_type }}{% endfor %}</td>
+		  <td>${{ item.price }}</td>
+		  </tr></table>
 		</a>
-      </li>
+      
     {% endfor %}
   </ul>
   {% else %}

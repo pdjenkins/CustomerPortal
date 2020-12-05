@@ -22,12 +22,15 @@
     {% for iteminstance in items_instance_list %}
 	    {% if iteminstance.status == "a" %}
 		    <a href="{{ iteminstance.get_absolute_url }}">
-          <li><img src="{{ iteminstance.item.picture.url }}" alt="{{ iteminstance.item.name }}" width="200" height="300">
-          {{ iteminstance.item.name }} 
+          <table><tr>
+		  <td><img src="{{ iteminstance.item.picture.url }}" alt="{{ iteminstance.item.name }}" width="200" height="300"></td>
+          <td>{{ iteminstance.item.name }} </td><td>
 			{% for product_type in iteminstance.item.product_type.all %}
-		, {{ product_type }}
+		  {{ product_type }}
 			{% endfor %}
-			: ${{ iteminstance.item.price}}</a></li>
+			</td>
+			 <td>  ${{ iteminstance.item.price}} </a></td>
+			</tr></table>
 		{% endif %}
 	{% endfor %}
   </ul>

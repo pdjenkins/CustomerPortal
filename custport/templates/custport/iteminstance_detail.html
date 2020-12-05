@@ -9,7 +9,6 @@
       <p><strong>{{ product_type }}</strong></p>
   {% endfor %}
   <p><strong>Number in Stock</strong> {{ iteminstance.item.iteminstance_set.all.count }}</p>
-  <p><strong>Availability</strong> {{ iteminstance.status }}</p>
   <form action="{% url 'addToCart' iteminstance.id %}" method="post">
     {% csrf_token %}
     <button type="submit" value="Add to cart">Add to cart</button>
